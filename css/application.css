@@ -1,0 +1,29 @@
+html {
+  background-image: url(../imgs/bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-color: #062F1B;
+}
+
+body {
+  position: absolute;
+  background-color: #4C5E4C;
+  height: 98%;
+  width: 50%;
+  left: 35%;
+  opacity: 0.9;
+}
+
+header {
+  margin: 10px;
+}
+
+.content {
+  margin: 10px;
+  clear: both;
+}
+
+#game {
+  margin-top: 20px;
+}
