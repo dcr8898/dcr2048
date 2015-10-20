@@ -4,13 +4,9 @@ var Util = {
         var rowCount = array.length;
         var colCount = array[0].length;
         var retArray = [];
-        for (var i = 0; i < rowCount; i++) {
-            retArray[i] = [];
-        }
+        for (var i = 0; i < rowCount; i++) retArray[i] = [];
         for (i = 0; i < rowCount; i++) {
-            for (var j = 0; j < colCount; j++) {
-                retArray[j][i] = array[i][j];
-            }
+            for (var j = 0; j < colCount; j++) retArray[j][i] = array[i][j];
         }
         return retArray;
     },

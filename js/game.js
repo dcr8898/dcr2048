@@ -30,27 +30,43 @@ function Game() {
 }
 
 Game.prototype.up = function() {
-    var cols = Util.columnize(this.grid);
-    cols = this.shift(cols, this);
-    this.grid = Util.decolumnize(cols);
+    if (this.moveAvailable('cols')) {
+        var cols = Util.columnize(this.grid);
+        cols = this.shift(cols, this);
+        this.grid = Util.decolumnize(cols);
+        return true;
+    }
+    return false;
 };
 
 Game.prototype.down = function() {
-    var cols = Util.columnize(this.grid.reverse());
-    cols = this.shift(cols, this);
-    this.grid = Util.decolumnize(cols).reverse();
+    if (this.moveAvailable('cols')) {
+        var cols = Util.columnize(this.grid.reverse());
+        cols = this.shift(cols, this);
+        this.grid = Util.decolumnize(cols).reverse();
+        return true;
+    }
+    return false;
 };
 
 Game.prototype.left = function() {
-    var rows = Util.rowify(this.grid);
-    rows = this.shift(rows, this);
-    this.grid = Util.derowify(rows);
+    if (this.moveAvailable('rows')) {
+        var rows = Util.rowify(this.grid);
+        rows = this.shift(rows, this);
+        this.grid = Util.derowify(rows);
+        return true;
+    }
+    return false;
 };
 
 Game.prototype.right = function() {
-    var rows = Util.rowify(this.grid.reverse());
-    rows = this.shift(rows, this);
-    this.grid = Util.derowify(rows).reverse();
+    if (this.moveAvailable('rows')) {
+        var rows = Util.rowify(this.grid.reverse());
+        rows = this.shift(rows, this);
+        this.grid = Util.derowify(rows).reverse();
+        return true;
+    }
+    return false;
 };
 
 Game.prototype.addTile = function() {
@@ -64,11 +80,15 @@ Game.prototype.addTile = function() {
     this.grid[newTileIndex] = newTile;
 };
 
-Game.prototype.MoveAvailable = function() {
-    if (this.grid.some(function(cell) {
-        return cell === 0;
-    })) return true;
-    var groups = Util.rowify(this.grid).concat(Util.columnize(this.grid));
+Game.prototype.moveAvailable = function(direction) {
+    if (this.grid.some(function(tile) { return tile === 0; })) return true;
+    var groups = [];
+    if (direction == 'rows' || direction == 'both') {
+        groups = groups.concat(Util.rowify(this.grid));
+    }
+    if (direction == 'cols' || direction == 'both') {
+        groups = groups.concat(Util.columnize(this.grid));
+    }
     return groups.some(Util.hasDouble);
 };
 

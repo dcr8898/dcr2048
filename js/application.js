@@ -11,23 +11,26 @@ function gameRunner() {
   game.addTile();
   game.addTile();
   View.update();
+  $(document).off('keyup');
   $(document).on('keyup', gamePlay);
 }
 
 function gamePlay(event) {
+  var result;
   switch(event.which) {
     case 37:
-      game.left();
+      result = game.left();
       break;
     case 38:
-      game.up();
+      result = game.up();
       break;
     case 39:
-      game.right();
+      result = game.right();
       break;
     case 40:
-      game.down();
+      result = game.down();
   }
+  if (!result) alert("Sorry, you can't do that right now");
   View.update();
   game.addTile();
   View.update();
