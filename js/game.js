@@ -85,7 +85,7 @@ Game.prototype.moveAvailable = function() {
     if (this.grid.some(function(tile) { return tile === 0; })) return true;
     var groups = [];
     groups = groups.concat(Util.rowify(this.grid), Util.columnize(this.grid));
-    return groups.some(Util.hasDouble);
+    return Util.hasDouble(groups);
 };
 
 Game.prototype.toString = function() {

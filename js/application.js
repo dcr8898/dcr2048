@@ -5,6 +5,7 @@ $(document).ready(function() {
 });
 
 var game;
+var highScore = 0;
 
 function gameRunner() {
   $(document).off('keyup');
@@ -37,9 +38,16 @@ function gamePlay(event) {
       result = game.down();
   }
   if (!result) return;
+  if (game.score > highScore) highScore = game.score;
   View.update();
-  if (game.won) gameWon();
-  if (!game.moveAvailable()) gameOver();
+  if (game.won) {
+    gameWon();
+    return;
+  }
+  if (!game.moveAvailable()) {
+    gameOver();
+    return;
+  }
   game.addTile();
   View.update();
 }
