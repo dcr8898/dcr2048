@@ -1,3 +1,6 @@
+GOAL = 2048;
+CHANCE_OF_FOUR_TILE = .875;
+
 function Game() {
 
     this.grid = [0, 0, 0, 0,
@@ -7,7 +10,7 @@ function Game() {
 
     this.score = 0;
 
-    this.goal = 2048;
+    this.won = false;
 
     this.shift = function(groups, object) {
         return groups.map(function(group) {
@@ -17,7 +20,9 @@ function Game() {
                 if (group.length == 1) {
                     retArray.push(group.shift());
                 } else if (group[0] == group[1]) {
-                    object.score += group[0] * 2;
+                    var newTileValue = group[0] * 2;
+                    object.score += newTileValue;
+                    object.won = (newTileValue == GOAL);
                     retArray.push(group.shift() + group.shift());
                 } else {
                     retArray.push(group.shift());
@@ -30,43 +35,39 @@ function Game() {
 }
 
 Game.prototype.up = function() {
-    if (this.moveAvailable('cols')) {
-        var cols = Util.columnize(this.grid);
-        cols = this.shift(cols, this);
-        this.grid = Util.decolumnize(cols);
-        return true;
-    }
-    return false;
+    var cols = Util.columnize(this.grid);
+    cols = this.shift(cols, this);
+    var newGrid = Util.decolumnize(cols);
+    if (Util.eq(this.grid, newGrid)) return false;
+    this.grid = newGrid;
+    return true;
 };
 
 Game.prototype.down = function() {
-    if (this.moveAvailable('cols')) {
-        var cols = Util.columnize(this.grid.reverse());
-        cols = this.shift(cols, this);
-        this.grid = Util.decolumnize(cols).reverse();
-        return true;
-    }
-    return false;
+    var cols = Util.columnize(this.grid.reverse());
+    cols = this.shift(cols, this);
+    var newGrid = Util.decolumnize(cols).reverse();
+    if (Util.eq(this.grid, newGrid)) return false;
+    this.grid = newGrid;
+    return true;
 };
 
 Game.prototype.left = function() {
-    if (this.moveAvailable('rows')) {
-        var rows = Util.rowify(this.grid);
-        rows = this.shift(rows, this);
-        this.grid = Util.derowify(rows);
-        return true;
-    }
-    return false;
+    var rows = Util.rowify(this.grid);
+    rows = this.shift(rows, this);
+    var newGrid = Util.derowify(rows);
+    if (Util.eq(this.grid, newGrid)) return false;
+    this.grid = newGrid;
+    return true;
 };
 
 Game.prototype.right = function() {
-    if (this.moveAvailable('rows')) {
-        var rows = Util.rowify(this.grid.reverse());
-        rows = this.shift(rows, this);
-        this.grid = Util.derowify(rows).reverse();
-        return true;
-    }
-    return false;
+    var rows = Util.rowify(this.grid.reverse());
+    rows = this.shift(rows, this);
+    var newGrid = Util.derowify(rows).reverse();
+    if (Util.eq(this.grid, newGrid)) return false;
+    this.grid = newGrid;
+    return true;
 };
 
 Game.prototype.addTile = function() {
@@ -76,26 +77,15 @@ Game.prototype.addTile = function() {
         return this.grid[index] === 0;
     }, this);
     var newTileIndex = empties[Math.floor(Math.random() * empties.length)];
-    var newTile = (Math.random() * 1000) < 875 ? 2 : 4;
+    var newTile = Math.random() < CHANCE_OF_FOUR_TILE ? 2 : 4;
     this.grid[newTileIndex] = newTile;
 };
 
-Game.prototype.moveAvailable = function(direction) {
+Game.prototype.moveAvailable = function() {
     if (this.grid.some(function(tile) { return tile === 0; })) return true;
     var groups = [];
-    if (direction == 'rows' || direction == 'both') {
-        groups = groups.concat(Util.rowify(this.grid));
-    }
-    if (direction == 'cols' || direction == 'both') {
-        groups = groups.concat(Util.columnize(this.grid));
-    }
+    groups = groups.concat(Util.rowify(this.grid), Util.columnize(this.grid));
     return groups.some(Util.hasDouble);
-};
-
-Game.prototype.won = function() {
-    return this.grid.some(function(element) {
-        return element === this.goal
-    }, this);
 };
 
 Game.prototype.toString = function() {
