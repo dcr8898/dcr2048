@@ -8,6 +8,8 @@ var View = {
         $('#grid-' + index).text('-');
       }
     });
+    $('#score').text(game.score);
+    $('#high-score').text(highScore);
   }
 
 };
