@@ -1,5 +1,5 @@
 GOAL = 2048;
-CHANCE_OF_FOUR_TILE = .875;
+CHANCE_OF_FOUR_TILE = .125;
 
 function Game() {
 
@@ -77,7 +77,7 @@ Game.prototype.addTile = function() {
         return this.grid[index] === 0;
     }, this);
     var newTileIndex = empties[Math.floor(Math.random() * empties.length)];
-    var newTile = Math.random() < CHANCE_OF_FOUR_TILE ? 2 : 4;
+    var newTile = Math.random() > CHANCE_OF_FOUR_TILE ? 2 : 4;
     this.grid[newTileIndex] = newTile;
 };
 
