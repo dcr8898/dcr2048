@@ -121,7 +121,7 @@ are based on 10px sizing. So basically 1.5rem = 15px :) */
 html {
   font-size: 62.5%; }
 body {
-  background-color: #4C5E4C;
+  background-color: #eeeeee;
   opacity: 0.9;
   font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
   line-height: 1.6;
@@ -130,7 +130,7 @@ body {
   color: #222; }
 header {
   text-align: center;
-  background-color: #f0f0f0 }
+  background-color: #eeeeee }
 .form-button {
   display: inline; }
 
@@ -330,13 +330,20 @@ pre > code {
 /* Tables
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 table {
-  width: 100%; }
+  border: outset 10pt;
+  border-collapse: separate;
+  border-spacing: 15pt;  }
 th,
 td {
-  padding: 12px 15px;
+  width: 72px;
+  height: 72px;
+  font-size: 3rem;
+  font-weight: bold;
   text-align: center;
-  vertical-align: center;
-  border: 1px solid #E1E1E1; }
+  vertical-align: middle;
+  position: relative;
+  border: 1px solid #E1E1E1;
+  border: inset 5pt; }
 
 
 /* Spacing
