@@ -4,15 +4,20 @@ var Util = {
         var rowCount = array.length;
         var colCount = array[0].length;
         var retArray = [];
-        for (var i = 0; i < rowCount; i++) {
-            retArray[i] = [];
-        }
+        for (var i = 0; i < rowCount; i++) retArray[i] = [];
         for (i = 0; i < rowCount; i++) {
-            for (var j = 0; j < colCount; j++) {
-                retArray[j][i] = array[i][j];
-            }
+            for (var j = 0; j < colCount; j++) retArray[j][i] = array[i][j];
         }
         return retArray;
+    },
+
+    eq: function(array1, array2) {
+        if (!array1 || !array2) return false;
+        if (array1.length !== array2.length) return false;
+        for (var i = 0, len = array1.length; i < len; i++) {
+            if (array1[i] != array2[i]) return false;
+        }
+        return true;
     },
 
     flatten: function(array) {
@@ -49,12 +54,11 @@ var Util = {
     },
 
     hasDouble: function(groups) {
-        groups.forEach(function(group) {
+        return groups.some(function(group) {
             for (var i = 0; i < 3; i++) {
                 if (group[i] == group[i + 1]) return true;
             }
         });
-        return false;
     },
 
     center: function(string, length, fillChar) {
