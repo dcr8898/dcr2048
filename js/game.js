@@ -47,7 +47,7 @@ Game.prototype.down = function() {
     var cols = Util.columnize(this.grid.reverse());
     cols = this.shift(cols, this);
     var newGrid = Util.decolumnize(cols).reverse();
-    if (Util.eq(this.grid, newGrid)) return false;
+    if (Util.eq(this.grid.reverse(), newGrid)) return false;
     this.grid = newGrid;
     return true;
 };
@@ -65,7 +65,7 @@ Game.prototype.right = function() {
     var rows = Util.rowify(this.grid.reverse());
     rows = this.shift(rows, this);
     var newGrid = Util.derowify(rows).reverse();
-    if (Util.eq(this.grid, newGrid)) return false;
+    if (Util.eq(this.grid.reverse(), newGrid)) return false;
     this.grid = newGrid;
     return true;
 };
@@ -77,7 +77,7 @@ Game.prototype.addTile = function() {
         return this.grid[index] === 0;
     }, this);
     var newTileIndex = empties[Math.floor(Math.random() * empties.length)];
-    var newTile = Math.random() > CHANCE_OF_FOUR_TILE ? 2 : 4;
+    var newTile = Math.random() >= CHANCE_OF_FOUR_TILE ? 2 : 4;
     this.grid[newTileIndex] = newTile;
 };
 
