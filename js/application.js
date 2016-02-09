@@ -39,10 +39,7 @@ function gamePlay(event) {
       result = game.down();
   }
 
-  if (!result) {
-    if (!game.moveAvailable()) gameOver();
-    return
-  };
+  if (!result) return;
 
   if (game.score > highScore) highScore = game.score;
 
@@ -55,6 +52,8 @@ function gamePlay(event) {
 
   game.addTile();
   View.update();
+
+  if (!game.moveAvailable()) gameOver();
 }
 
 function gameWon() {
