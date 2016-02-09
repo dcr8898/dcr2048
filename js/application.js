@@ -20,6 +20,7 @@ function gameRunner() {
 function gamePlay(event) {
   var result;
   var direction;
+
   switch(event.which) {
     case 37:
       direction = 'left';
@@ -37,17 +38,21 @@ function gamePlay(event) {
       direction = 'down';
       result = game.down();
   }
-  if (!result) return;
+
+  if (!result) {
+    if (!game.moveAvailable()) gameOver();
+    return
+  };
+
   if (game.score > highScore) highScore = game.score;
+
   View.update();
+
   if (game.won) {
     gameWon();
     return;
   }
-  if (!game.moveAvailable()) {
-    gameOver();
-    return;
-  }
+
   game.addTile();
   View.update();
 }
