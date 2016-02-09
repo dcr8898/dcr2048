@@ -3,10 +3,12 @@ CHANCE_OF_FOUR_TILE = .125;
 
 function Game() {
 
-    this.grid = [0, 0, 0, 0,
-                 0, 0, 0, 0,
-                 0, 0, 0, 0,
-                 0, 0, 0, 0];
+    this.grid = [
+        0, 0, 0, 0,
+        0, 0, 0, 0,
+        0, 0, 0, 0,
+        0, 0, 0, 0
+    ];
 
     this.score = 0;
 
@@ -44,10 +46,11 @@ Game.prototype.up = function() {
 };
 
 Game.prototype.down = function() {
-    var cols = Util.columnize(this.grid.reverse());
+    var oldGrid = [].concat(this.grid);
+    var cols = Util.columnize(oldGrid.reverse());
     cols = this.shift(cols, this);
     var newGrid = Util.decolumnize(cols).reverse();
-    if (Util.eq(this.grid.reverse(), newGrid)) return false;
+    if (Util.eq(this.grid, newGrid)) return false;
     this.grid = newGrid;
     return true;
 };
@@ -62,10 +65,11 @@ Game.prototype.left = function() {
 };
 
 Game.prototype.right = function() {
-    var rows = Util.rowify(this.grid.reverse());
+    var oldGrid = [].concat(this.grid);
+    var rows = Util.rowify(oldGrid.reverse());
     rows = this.shift(rows, this);
     var newGrid = Util.derowify(rows).reverse();
-    if (Util.eq(this.grid.reverse(), newGrid)) return false;
+    if (Util.eq(this.grid, newGrid)) return false;
     this.grid = newGrid;
     return true;
 };
@@ -83,8 +87,7 @@ Game.prototype.addTile = function() {
 
 Game.prototype.moveAvailable = function() {
     if (this.grid.some(function(tile) { return tile === 0; })) return true;
-    var groups = [];
-    groups = groups.concat(Util.rowify(this.grid), Util.columnize(this.grid));
+    var groups = [].concat(Util.rowify(this.grid), Util.columnize(this.grid));
     return Util.hasDouble(groups);
 };
 
