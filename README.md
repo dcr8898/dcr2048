@@ -4,4 +4,4 @@ A clone of the brilliant [2048](https://gabrielecirulli.github.io/2048/) by Gabr
 
 I did this as an exercise in Javscript and CSS.
 
-Please enjoy!
+Please [enjoy](http://rossney.net/2048)!
